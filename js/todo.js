@@ -1,6 +1,5 @@
 $(document)
     .ready(function () {
-
         function generateUUID() {
             /*jshint bitwise:false */
             var i,
@@ -21,5 +20,61 @@ $(document)
             return uuid;
         }
 
-        // code to be implemented
-    });
+        $("#button").click(function(){
+            var val = $(".input-text").val();
+            if ( val !== "" ){
+               $('element').attr('id', 'value');
+               $("ol").append("<li id= '' class= ''><input name='done-todo' class='done-todo' type='checkbox'><span contenteditable='true'>" + val + "</span></li>");
+               $('ol li').attr('id', generateUUID());
+               $(".input-text").val("");
+            }
+        });
+
+       $('ol').on('change', ':checkbox', function () {
+            if (this.checked) {
+                $(this).closest('li').css('text-decoration', 'line-through');
+                $(this).closest('li').addClass('checked');
+            } else {
+                $(this).closest('li').css('text-decoration', 'none');
+                $(this).closest('li').removeClass('checked');
+            }
+        });
+
+       jQuery("a[data-filter='complete']").click(function(){
+              console.log("completed");
+              $('ul > li a').removeClass('selected');
+              $(this).addClass('selected');
+              $('li').show();
+              $('ol li:not(.checked)').hide();
+       });
+
+        jQuery("a[data-filter='active']").click(function(){
+            console.log("active");
+            $('ul > li a').removeClass('selected');
+            $(this).addClass('selected');
+             $('li').show();
+            $('li.checked').hide();
+       });
+
+       jQuery("a[data-filter='all']").click(function(){
+            console.log("all");
+            $('ul > li a').removeClass('selected');
+            $(this).addClass('selected');
+            $('li').show();
+       });
+
+         $('.input-text').keypress(function (e) {
+          var key = e.which;
+          if(key == 13) {
+             $("#button").click();
+             return false;
+           }
+         });
+
+       $('#input').keypress(function(e) {
+         var key = e.which;
+         if(key == 13) {
+           e.preventDefault();
+          }
+       });
+});
